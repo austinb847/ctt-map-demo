@@ -12,21 +12,12 @@ mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
 class App extends React.Component {
 
   componentDidMount() {
-    const transformRequest = (url) => {
-			const hasQuery = url.indexOf("?") !== -1;
-			const suffix = hasQuery ? "&pluginName=lunchboxDirections" : "?pluginName=lunchboxDirections";
-			return {
-				url: url + suffix
-			}
-		}
-
-		const map = new mapboxgl.Map({
-			container: this.mapWrapper,
-			style: 'mapbox://styles/mapbox/streets-v11',
-			center: [-95.7129, 37.0902],
-			zoom: 3,
-			transformRequest: transformRequest
-		});
+    const map = new mapboxgl.Map({
+      container: this.mapWrapper,
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [-95.7129, 37.0902],
+      zoom: 3
+    });
 
 		const geocoder = new MapboxGeocoder({
       accessToken: mapboxgl.accessToken,
@@ -41,23 +32,20 @@ class App extends React.Component {
 
 		
     
-     const addCollegeMarkers = function() {
+    const addCollegeMarkers = function() {
       collegeData.features.map(college => {
         let lat = college.geometry.coordinates[0];
-				let long = college.geometry.coordinates[1];
+        let long = college.geometry.coordinates[1];
         let el = document.createElement('div');
         el.className = 'marker';
         el.style.backgroundImage = "/college.svg"
         new mapboxgl.Marker(el)
-				.setLngLat([lat, long])
-				.setPopup( new mapboxgl.Popup({ offset: 25})
-				.setHTML('<h3>' + college.properties.name + '</h3><p>' + college.properties.description + '</p>'))
-				.addTo(map);
-      })
-		 }
-
-
-
+        .setLngLat([lat, long])
+        .setPopup( new mapboxgl.Popup({ offset: 25})
+        .setHTML('<h3>' + college.properties.name + '</h3><p>' + college.properties.description + '</p>'))
+        .addTo(map);
+      });
+    }
 
 		let origin = [-122.881750, 45.542940];
 		let destination = [-117.072350, 32.777599];
@@ -136,18 +124,18 @@ class App extends React.Component {
 			});
 		};
 
-			/// for menu layer of map style
-			const layerList = document.getElementById('menu');
-			const inputs = layerList.getElementsByTagName('input');
-			 
-			function switchLayer(layer) {
-			let layerId = layer.target.id;
-			map.setStyle('mapbox://styles/mapbox/' + layerId);
-			}
-			 
-			for (var i = 0; i < inputs.length; i++) {
-			inputs[i].onclick = switchLayer;
-			}
+    /// for menu layer of map style
+    const layerList = document.getElementById('menu');
+    const inputs = layerList.getElementsByTagName('input');
+      
+    function switchLayer(layer) {
+      let layerId = layer.target.id;
+      map.setStyle('mapbox://styles/mapbox/' + layerId);
+    }
+      
+    for (var i = 0; i < inputs.length; i++) {
+      inputs[i].onclick = switchLayer;
+    }
 
 		// marker setup
 		const start = new mapboxgl.Marker({
@@ -166,8 +154,8 @@ class App extends React.Component {
 			getDirections();
 		};
 
-		start.on('dragend', onDragEnd);
-		end.on('dragend', onDragEnd);
+    start.on('dragend', onDragEnd);
+    end.on('dragend', onDragEnd);
 
 		map.on('load', () => {
 			map.addSource('route', {
@@ -241,23 +229,23 @@ class App extends React.Component {
       <React.Fragment>
       <div ref={el => (this.mapWrapper = el)} className="mapWrapper" />
       <div class="map-overlay-container">
-      <div id="menu">
-        <input
-          id="streets-v11"
-          type="radio"
-          name="rtoggle"
-          value="streets"
-          defaultChecked="checked"
-        />
-          <label for="streets-v11">streets</label>
-          <input id="light-v10" type="radio" name="rtoggle" value="light" />
-          <label for="light-v10">light</label>
-          <input id="dark-v10" type="radio" name="rtoggle" value="dark" />
-          <label for="dark-v10">dark</label>
-          <input id="outdoors-v11" type="radio" name="rtoggle" value="outdoors" />
-          <label for="outdoors-v11">outdoors</label>
-          <input id="satellite-v9" type="radio" name="rtoggle" value="satellite" />
-          <label for="satellite-v9">satellite</label>
+        <div id="menu">
+          <input
+            id="streets-v11"
+            type="radio"
+            name="rtoggle"
+            value="streets"
+            defaultChecked="checked"
+          />
+            <label for="streets-v11">streets</label>
+            <input id="light-v10" type="radio" name="rtoggle" value="light" />
+            <label for="light-v10">light</label>
+            <input id="dark-v10" type="radio" name="rtoggle" value="dark" />
+            <label for="dark-v10">dark</label>
+            <input id="outdoors-v11" type="radio" name="rtoggle" value="outdoors" />
+            <label for="outdoors-v11">outdoors</label>
+            <input id="satellite-v9" type="radio" name="rtoggle" value="satellite" />
+            <label for="satellite-v9">satellite</label>
         </div>
         <div class="map-overlay">
           <h2 id="overview"></h2>
