@@ -44,13 +44,6 @@
   font-family: 'Open Sans', sans-serif;
 }
 
-/* #geocoder-container > div {
-  min-width: 50%;
-  max-width:60%;
-  margin-left: 50%;
-  width:100%;
-  text-align: right;
-} */
 
 .geocoder {
   z-index: 1;
